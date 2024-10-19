@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات فيسبوك</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            background-color: #f3f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 600;
+            text-align: center;
+            color: #007bff;
+        }
+
+        .project-name-box {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-section {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            border: 1px solid #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .notification {
+            display: none;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .notification.error {
+            background-color: #dc3545;
+        }
+
+        .notification.success {
+            background-color: #28a745;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="project-name-box">
+            <span>مشروع أدوات فيسبوك - إدارة التفاعلات والتعليقات</span>
+        </div>
+
+        <h1>أدوات فيسبوك</h1>
+
+        <!-- Access Token Box (Used for all tools) -->
+        <div class="tool-section">
+            <h3>أدخل التوكن</h3>
+            <label for="access-token">أدخل توكن الوصول (يتم استخدامه في جميع الأدوات)</label>
+            <textarea id="access-token" rows="5" placeholder="أدخل أكواد التوكن هنا، كل واحد في سطر"></textarea>
+        </div>
+
+        <!-- Like Tool -->
+        <div class="tool-section">
+            <h3>أداة لايكات</h3>
+            <label for="like-post-url">رابط البوست</label>
+            <input type="text" id="like-post-url" placeholder="أدخل رابط البوست">
+
+            <label for="like-count">عدد اللايكات</label>
+            <input type="number" id="like-count" min="1" placeholder="عدد اللايكات">
+
+            <label for="like-interval">الفاصل الزمني (بالثواني)</label>
+            <input type="number" id="like-interval" min="1" placeholder="الفاصل الزمني">
+
+            <button onclick="likePost()">تنفيذ اللايكات</button>
+        </div>
+
+        <!-- Comment Tool -->
+        <div class="tool-section">
+            <h3>أداة التعليقات</h3>
+            <label for="comment-post-url">رابط البوست</label>
+            <input type="text" id="comment-post-url" placeholder="أدخل رابط البوست">
+
+            <label for="comments">الكومنتات</label>
+            <textarea id="comments" rows="5" placeholder="أدخل الكومنتات، كل كومنت في سطر"></textarea>
+
+            <label for="comment-count">عدد التعليقات</label>
+            <input type="number" id="comment-count" min="1" placeholder="عدد التعليقات">
+
+            <label for="comment-interval">الفاصل الزمني (بالثواني)</label>
+            <input type="number" id="comment-interval" min="1" placeholder="الفاصل الزمني">
+
+            <button onclick="commentOnPost()">تنفيذ التعليقات</button>
+        </div>
+
+        <!-- Share Tool -->
+        <div class="tool-section">
+            <h3>أداة المشاركة</h3>
+            <label for="share-post-url">رابط البوست</label>
+            <input type="text" id="share-post-url" placeholder="أدخل رابط البوست">
+
+            <label for="share-type">طريقة المشاركة</label>
+            <select id="share-type" onchange="toggleGroupIdField()">
+                <option value="profile">على البروفايل</option>
+                <option value="group">على الجروب</option>
+            </select>
+
+            <label for="group-id-field" id="group-id-label" style="display: none;">أدخل ID الجروب</label>
+            <textarea id="group-id-field" rows="5" placeholder="أدخل معرفات الجروبات هنا، كل واحد في سطر" style="display: none;"></textarea>
+
+            <label for="share-count">عدد المشاركات</label>
+            <input type="number" id="share-count" min="1" placeholder="عدد المشاركات">
+
+            <label for="share-interval">الفاصل الزمني (بالثواني)</label>
+            <input type="number" id="share-interval" min="1" placeholder="الفاصل الزمني">
+
+            <button onclick="sharePost()">تنفيذ المشاركة</button>
+        </div>
+
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <div class="footer">
+        <p>تم الإنشاء بواسطة المبرمج أحمد علي</p>
+    </div>
+
+    <script>
+        // Function to handle the Like action
+        function likePost() {
+            let accessTokens = document.getElementById('access-token').value.split('\n');
+            let postUrl = document.getElementById('like-post-url').value;
+            let likeCount = parseInt(document.getElementById('like-count').value);
+            let interval = parseInt(document.getElementById('like-interval').value);
+
+            if (!accessTokens || !postUrl || isNaN(likeCount) || isNaN(interval)) {
+                alert('من فضلك أدخل كافة البيانات');
+                return;
+            }
+
+            let postId = getPostIdFromUrl(postUrl);
+            if (!postId) {
+                alert('رابط البوست غير صحيح');
+                return;
+            }
+
+            let currentTokenIndex = 0;
+
+            function executeLike() {
+                if (currentTokenIndex < likeCount) {
+                    let accessToken = accessTokens[currentTokenIndex % accessTokens.length].trim();
+
+                    setTimeout(() => {
+                        fetch(`https://graph.facebook.com/${postId}/likes?access_token=${accessToken}`, {
+                            method: 'POST',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('تم إضافة لايك');
+                        })
+                        .catch(error => {
+                            console.error('حدث خطأ:', error);
+                            showNotification('حدث خطأ أثناء إضافة اللايك', 'error');
+                        });
+                    }, currentTokenIndex * interval * 1000);
+
+                    currentTokenIndex++;
+                    setTimeout(executeLike, interval * 1000);
+                } else {
+                    showNotification('تم الانتهاء من عملية اللايكات بنجاح', 'success');
+                }
+            }
+
+            executeLike();
+        }
+
+        // Function to handle the Comment action
+        function commentOnPost() {
+            let accessTokens = document.getElementById('access-token').value.split('\n');
+            let postUrl = document.getElementById('comment-post-url').value;
+            let commentCount = parseInt(document.getElementById('comment-count').value);
+            let interval = parseInt(document.getElementById('comment-interval').value);
+            let comments = document.getElementById('comments').value.split('\n').map(c => c.trim());
+
+            if (!accessTokens || !postUrl || isNaN(commentCount) || isNaN(interval) || comments.length === 0) {
+                alert('من فضلك أدخل كافة البيانات');
+                return;
+            }
+
+            let postId = getPostIdFromUrl(postUrl);
+            if (!postId) {
+                alert('رابط البوست غير صحيح');
+                return;
+            }
+
+            let currentTokenIndex = 0;
+
+            function executeComment() {
+                if (currentTokenIndex < commentCount) {
+                    let accessToken = accessTokens[currentTokenIndex % accessTokens.length].trim();
+
+                    setTimeout(() => {
+                        fetch(`https://graph.facebook.com/${postId}/comments?message=${encodeURIComponent(comments[currentTokenIndex % comments.length])}&access_token=${accessToken}`, {
+                            method: 'POST',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('تم إضافة التعليق بنجاح');
+                        })
+                        .catch(error => {
+                            console.error('خطأ في إضافة التعليق:', error);
+                            showNotification(`حدث خطأ أثناء إضافة التعليق: ${error.message}`, 'error');
+                        });
+                    }, currentTokenIndex * interval * 1000);
+
+                    currentTokenIndex++;
+                    setTimeout(executeComment, interval * 1000);
+                } else {
+                    showNotification('تم الانتهاء من عملية التعليقات بنجاح', 'success');
+                }
+            }
+
+            executeComment();
+        }
+
+        // Function to handle the Share action
+        function sharePost() {
+            let accessTokens = document.getElementById('access-token').value.split('\n');
+            let postUrl = document.getElementById('share-post-url').value;
+            let shareCount = parseInt(document.getElementById('share-count').value);
+            let interval = parseInt(document.getElementById('share-interval').value);
+            let shareType = document.getElementById('share-type').value;
+            let groupIds = document.getElementById('group-id-field').value.split('\n').map(id => id.trim());
+
+            if (!accessTokens || !postUrl || isNaN(shareCount) || isNaN(interval)) {
+                alert('من فضلك أدخل كافة البيانات');
+                return;
+            }
+
+            let postId = getPostIdFromUrl(postUrl);
+            if (!postId) {
+                alert('رابط البوست غير صحيح');
+                return;
+            }
+
+            let currentTokenIndex = 0;
+
+            function executeShare() {
+                if (currentTokenIndex < shareCount) {
+                    let accessToken = accessTokens[currentTokenIndex % accessTokens.length].trim();
+                    let targetUrl = (shareType === 'profile') ? `https://graph.facebook.com/${postId}/sharedposts?access_token=${accessToken}` : null;
+
+                    if (shareType === 'group' && groupIds.length > 0) {
+                        groupIds.forEach(groupId => {
+                            setTimeout(() => {
+                                fetch(`https://graph.facebook.com/${groupId}/feed?message=${encodeURIComponent(postUrl)}&access_token=${accessToken}`, {
+                                    method: 'POST',
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('تم مشاركة البوست على الجروب');
+                                })
+                                .catch(error => {
+                                    console.error('حدث خطأ:', error);
+                                    showNotification('حدث خطأ أثناء المشاركة على الجروب', 'error');
+                                });
+                            }, currentTokenIndex * interval * 1000);
+                        });
+                    } else {
+                        setTimeout(() => {
+                            fetch(targetUrl, {
+                                method: 'POST',
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('تم مشاركة البوست على البروفايل');
+                            })
+                            .catch(error => {
+                                console.error('حدث خطأ:', error);
+                                showNotification('حدث خطأ أثناء المشاركة على البروفايل', 'error');
+                            });
+                        }, currentTokenIndex * interval * 1000);
+                    }
+
+                    currentTokenIndex++;
+                    setTimeout(executeShare, interval * 1000);
+                } else {
+                    showNotification('تم الانتهاء من عملية المشاركة بنجاح', 'success');
+                }
+            }
+
+            executeShare();
+        }
+
+        // Helper function to extract Post ID from URL
+        function getPostIdFromUrl(url) {
+            const match = url.match(/pfbid[\w\d]+/);
+            if (match) {
+                return match[0];
+            }
+            return null;
+        }
+
+        // Function to show notifications
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Toggle the visibility of the group ID field
+        function toggleGroupIdField() {
+            let shareType = document.getElementById('share-type').value;
+            let groupIdField = document.getElementById('group-id-field');
+            let groupIdLabel = document.getElementById('group-id-label');
+
+            if (shareType === 'group') {
+                groupIdField.style.display = 'block';
+                groupIdLabel.style.display = 'block';
+            } else {
+                groupIdField.style.display = 'none';
+                groupIdLabel.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
